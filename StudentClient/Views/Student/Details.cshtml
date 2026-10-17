@@ -1,0 +1,18 @@
+@model StudentClient.Models.Student
+@{
+    ViewData["Title"] = "Информация о студенте";
+}
+<!DOCTYPE html>
+<html lang="ru">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Информация о студенте</title></head>
+<body style="font-family:Arial,sans-serif;max-width:650px;margin:40px auto;padding:0 18px">
+    <h1>Информация о студенте</h1>
+    <p><strong>ID:</strong> @Model.Id</p>
+    <p><strong>ФИО:</strong> @Model.FullName</p>
+    <p><strong>Группа:</strong> @Model.Group</p>
+    <p><strong>Курс:</strong> @Model.Course</p>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <a asp-action="Index">Вернуться к списку</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Изменить</a>
+</body>
+</html>

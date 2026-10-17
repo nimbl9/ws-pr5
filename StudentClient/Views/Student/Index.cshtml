@@ -1,0 +1,54 @@
+@model List<StudentClient.Models.Student>
+@{
+    ViewData["Title"] = "Список студентов";
+}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Список студентов</title>
+    <style>
+        body{font-family:Arial,sans-serif;max-width:1150px;margin:35px auto;padding:0 18px;color:#222}
+        table{width:100%;border-collapse:collapse;margin-top:20px}
+        th,td{border:1px solid #ddd;padding:12px;text-align:left}
+        th{background:#f2f2f2}
+        a,button{display:inline-block;padding:8px 12px;margin:2px;text-decoration:none;border:0;border-radius:4px;cursor:pointer}
+        .primary{background:#1769aa;color:white}.edit{background:#e8a317;color:#111}.delete{background:#c62828;color:white}
+        .notice{padding:12px;background:#e4f5e7;margin:12px 0}.error{padding:12px;background:#ffe7e7;margin:12px 0}
+        form{display:inline}
+    </style>
+</head>
+<body>
+    <h1>Список студентов</h1>
+    @if (ViewBag.Notice != null) { <div class="notice">@ViewBag.Notice</div> }
+    @if (ViewBag.Error != null)
+    {
+        <div class="error">
+            @ViewBag.Error
+            @if (ViewBag.StatusCode != null && (int)ViewBag.StatusCode != 0) { <span> Код ответа: @ViewBag.StatusCode</span> }
+        </div>
+    }
+    <a class="primary" asp-action="Create">Добавить студента</a>
+    @if (Model.Count == 0 && ViewBag.Error == null) { <p>Список студентов пока пуст.</p> }
+    <table>
+        <thead><tr><th>ID</th><th>ФИО</th><th>Группа</th><th>Курс</th><th>Email</th><th>Действия</th></tr></thead>
+        <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.Id</td><td>@student.FullName</td><td>@student.Group</td><td>@student.Course</td><td>@student.Email</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@student.Id">Открыть</a>
+                    <a class="edit" asp-action="Edit" asp-route-id="@student.Id">Изменить</a>
+                    <form asp-action="Delete" asp-route-id="@student.Id" method="post" onsubmit="return confirm('Удалить этого студента?')">
+                        @Html.AntiForgeryToken()
+                        <button class="delete" type="submit">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</body>
+</html>

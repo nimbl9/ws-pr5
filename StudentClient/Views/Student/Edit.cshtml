@@ -1,0 +1,24 @@
+@model StudentClient.Models.Student
+@{
+    ViewData["Title"] = "Редактирование студента";
+}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Редактирование студента</title>
+    <style>body{font-family:Arial,sans-serif;max-width:600px;margin:40px auto;padding:0 18px}label{display:block;margin-top:16px}input{box-sizing:border-box;width:100%;padding:10px;margin-top:6px}button,a{display:inline-block;margin-top:20px;padding:10px 14px;border:0;border-radius:4px;background:#1769aa;color:white;text-decoration:none;cursor:pointer}.validation{color:#b71c1c}</style>
+</head>
+<body>
+    <h1>Редактирование студента</h1>
+    <div class="validation" asp-validation-summary="All"></div>
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+        @Html.AntiForgeryToken()
+        <input asp-for="Id" type="hidden">
+        <label asp-for="FullName">ФИО</label><input asp-for="FullName" required><span asp-validation-for="FullName" class="validation"></span>
+        <label asp-for="Group">Группа</label><input asp-for="Group" required><span asp-validation-for="Group" class="validation"></span>
+        <label asp-for="Course">Курс</label><input asp-for="Course" type="number" min="1" max="6" required><span asp-validation-for="Course" class="validation"></span>
+        <label asp-for="Email">Email</label><input asp-for="Email" type="email" required><span asp-validation-for="Email" class="validation"></span>
+        <button type="submit">Сохранить изменения</button><a asp-action="Index">Назад</a>
+    </form>
+</body>
+</html>
